@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import '../models/debt.dart';
@@ -19,9 +20,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-  
+
   // UBAH ANGKA INI: Berapa jam catatan muncul di beranda
-  static const int _recentDurationHours = 6; 
+  static const int _recentDurationHours = 6;
 
   String _formatRupiah(double amount) {
     return NumberFormat.currency(
@@ -45,7 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => DebtDetailSheet(debt: debt, formatRupiah: _formatRupiah),
+      builder: (context) =>
+          DebtDetailSheet(debt: debt, formatRupiah: _formatRupiah),
     );
   }
 
@@ -56,8 +58,12 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Consumer<DebtProvider>(
           builder: (context, provider, _) {
-            final totalAktif = provider.debts.where((d) => !d.isPaid).fold(0.0, (sum, item) => sum + item.amount);
-            final totalLunas = provider.debts.where((d) => d.isPaid).fold(0.0, (sum, item) => sum + item.amount);
+            final totalAktif = provider.debts
+                .where((d) => !d.isPaid)
+                .fold(0.0, (sum, item) => sum + item.amount);
+            final totalLunas = provider.debts
+                .where((d) => d.isPaid)
+                .fold(0.0, (sum, item) => sum + item.amount);
 
             return IndexedStack(
               index: _currentIndex,
@@ -109,11 +115,11 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildNavItem(Icons.home_filled, 'Beranda', 0),
-          _buildNavItem(Icons.account_balance_wallet_outlined, 'Riwayat', 1),
+          _buildNavItem(Icons.home, 'Beranda', 0),
+          _buildNavItem(Icons.account_balance_wallet, 'Riwayat', 1),
           const SizedBox(width: 48),
-          _buildNavItem(Icons.calendar_month_outlined, 'Jadwal', 2),
-          _buildNavItem(Icons.person_outline, 'Profil', 3),
+          _buildNavItem(Icons.calendar_month, 'Jadwal', 2),
+          _buildNavItem(Icons.settings, 'Pengaturan', 3),
         ],
       ),
     );

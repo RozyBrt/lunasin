@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../models/debt.dart';
 import '../../providers/debt_provider.dart';
 import '../../widgets/transaction_item.dart';
@@ -22,7 +23,7 @@ class ScheduleSection extends StatelessWidget {
         .entries
         .where((e) => !e.value.isPaid && e.value.dueDate != null)
         .toList();
-    
+
     // Sort by due date
     upcoming.sort((a, b) => a.value.dueDate!.compareTo(b.value.dueDate!));
 
@@ -36,7 +37,11 @@ class ScheduleSection extends StatelessWidget {
             children: [
               Text(
                 'Jadwal Bayar',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF1E293B)),
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF1E293B),
+                ),
               ),
               Text(
                 'Jangan lupa tunaikan amanah tepat waktu',
@@ -46,36 +51,45 @@ class ScheduleSection extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: upcoming.isEmpty 
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.calendar_month_outlined, size: 80, color: Colors.grey[200]),
-                  const SizedBox(height: 16),
-                  const Text('Tidak ada jadwal terdekat', style: TextStyle(color: Colors.grey)),
-                ],
-              ),
-            )
-          : ListView.builder(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
-              itemCount: upcoming.length,
-              itemBuilder: (context, index) {
-                final entry = upcoming[index];
-                final debt = entry.value;
-                final diff = debt.dueDate!.difference(DateTime.now()).inDays;
-                
-                return TransactionItem(
-                  debt: debt,
-                  index: entry.key,
-                  provider: provider,
-                  isScheduleView: true,
-                  daysDiff: diff,
-                  onEdit: onEdit,
-                  onShowDetail: onShowDetail,
-                );
-              },
-            ),
+          child: upcoming.isEmpty
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.calendar_month_outlined,
+                        size: 80,
+                        color: Colors.grey[200],
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Tidak ada jadwal terdekat',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                )
+              : ListView.builder(
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
+                  itemCount: upcoming.length,
+                  itemBuilder: (context, index) {
+                    final entry = upcoming[index];
+                    final debt = entry.value;
+                    final diff = debt.dueDate!
+                        .difference(DateTime.now())
+                        .inDays;
+
+                    return TransactionItem(
+                      debt: debt,
+                      index: entry.key,
+                      provider: provider,
+                      isScheduleView: true,
+                      daysDiff: diff,
+                      onEdit: onEdit,
+                      onShowDetail: onShowDetail,
+                    );
+                  },
+                ),
         ),
       ],
     );

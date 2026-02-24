@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:intl/intl.dart';
 import '../models/debt.dart';
 import '../providers/debt_provider.dart';
@@ -58,12 +59,18 @@ class TransactionItem extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: debt.isPaid ? const Color(0xFFDCFCE7) : const Color(0xFFFEE2E2),
+                  color: debt.isPaid
+                      ? const Color(0xFFDCFCE7)
+                      : const Color(0xFFFEE2E2),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  debt.isPaid ? Icons.check_circle_outlined : Icons.timer_outlined,
-                  color: debt.isPaid ? const Color(0xFF166534) : const Color(0xFF991B1B),
+                  debt.isPaid
+                      ? Icons.check_circle_outlined
+                      : Icons.timer_outlined,
+                  color: debt.isPaid
+                      ? const Color(0xFF166534)
+                      : const Color(0xFF991B1B),
                   size: 20,
                 ),
               ),
@@ -75,10 +82,14 @@ class TransactionItem extends StatelessWidget {
                 children: [
                   RichText(
                     text: TextSpan(
-                      style: const TextStyle(color: Colors.black87, fontSize: 14),
+                      style: const TextStyle(
+                        color: Colors.black87,
+                        fontSize: 14,
+                      ),
                       children: [
                         TextSpan(
-                          text: '${debt.isPaid ? "Sudah Bayar" : "Pinjam Ke"}: ',
+                          text:
+                              '${debt.isPaid ? "Sudah Bayar" : "Pinjam Ke"}: ',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         TextSpan(
@@ -92,12 +103,20 @@ class TransactionItem extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 4.0),
                       child: Row(
                         children: [
-                          const Icon(Icons.check_circle, size: 12, color: Colors.green),
+                          const Icon(
+                            Icons.check_circle_outlined,
+                            size: 12,
+                            color: Colors.green,
+                          ),
                           const SizedBox(width: 4),
                           Expanded(
                             child: Text(
                               "Lunas pada: ${DateFormat('dd MMM yyyy').format(debt.paidDate!)}",
-                              style: const TextStyle(fontSize: 11, color: Colors.green, fontWeight: FontWeight.bold),
+                              style: const TextStyle(
+                                fontSize: 11,
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
+                              ),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -105,41 +124,50 @@ class TransactionItem extends StatelessWidget {
                       ),
                     ),
                   if (!debt.isPaid && debt.dueDate != null)
-                    Builder(builder: (context) {
-                      final due = debt.dueDate!;
-                      final diff = daysDiff;
-                      final isUrgent = diff != null && diff < 3;
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 4.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.event,
+                    Builder(
+                      builder: (context) {
+                        final due = debt.dueDate!;
+                        final diff = daysDiff;
+                        final isUrgent = diff != null && diff < 3;
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 4.0),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.event,
                                 size: 12,
-                                color: isUrgent ? Colors.red : Colors.grey),
-                            const SizedBox(width: 4),
-                            Expanded(
-                              child: Text(
-                                "Jatuh Tempo: ${DateFormat('dd MMM yyyy').format(due)}",
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  color: isUrgent ? Colors.red : Colors.blueGrey,
-                                  fontWeight: isUrgent
-                                      ? FontWeight.bold
-                                      : FontWeight.normal,
-                                ),
-                                overflow: TextOverflow.ellipsis,
+                                color: isUrgent ? Colors.red : Colors.grey,
                               ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
+                              const SizedBox(width: 4),
+                              Expanded(
+                                child: Text(
+                                  "Jatuh Tempo: ${DateFormat('dd MMM yyyy').format(due)}",
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    color: isUrgent
+                                        ? Colors.red
+                                        : Colors.blueGrey,
+                                    fontWeight: isUrgent
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   if (debt.note.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(top: 2.0),
                       child: Text(
                         debt.note,
-                        style: const TextStyle(fontSize: 12, color: Colors.grey),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -153,33 +181,53 @@ class TransactionItem extends StatelessWidget {
                 IconButton(
                   constraints: const BoxConstraints(),
                   padding: const EdgeInsets.symmetric(horizontal: 8),
-                  icon: const Icon(Icons.info_outline_rounded, size: 18, color: Colors.indigo),
+                  icon: const Icon(
+                    Icons.info_outline_rounded,
+                    size: 18,
+                    color: Colors.indigo,
+                  ),
                   onPressed: () => onShowDetail(context, debt),
                 ),
                 IconButton(
                   constraints: const BoxConstraints(),
                   padding: const EdgeInsets.symmetric(horizontal: 8),
-                  icon: const Icon(Icons.edit_outlined, size: 18, color: Colors.grey),
+                  icon: const Icon(
+                    Icons.edit_outlined,
+                    size: 18,
+                    color: Colors.grey,
+                  ),
                   onPressed: () => onEdit(context, debt: debt, index: index),
                 ),
                 IconButton(
                   constraints: const BoxConstraints(),
                   padding: const EdgeInsets.symmetric(horizontal: 8),
-                  icon: const Icon(Icons.delete_outline_rounded, size: 18, color: Colors.redAccent),
+                  icon: const Icon(
+                    Icons.delete_outline_rounded,
+                    size: 18,
+                    color: Colors.redAccent,
+                  ),
                   onPressed: () {
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
                         title: const Text("Hapus Catatan?"),
-                        content: const Text("Data ini akan dihapus permanen dari riwayat."),
+                        content: const Text(
+                          "Data ini akan dihapus permanen dari riwayat.",
+                        ),
                         actions: [
-                          TextButton(onPressed: () => Navigator.pop(context), child: const Text("Batal")),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text("Batal"),
+                          ),
                           TextButton(
                             onPressed: () {
                               provider.deleteDebt(index);
                               Navigator.pop(context);
-                            }, 
-                            child: const Text("Hapus", style: TextStyle(color: Colors.red)),
+                            },
+                            child: const Text(
+                              "Hapus",
+                              style: TextStyle(color: Colors.red),
+                            ),
                           ),
                         ],
                       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:intl/intl.dart';
 import '../models/debt.dart';
 
@@ -12,7 +13,12 @@ class DebtDetailSheet extends StatelessWidget {
     required this.formatRupiah,
   });
 
-  Widget _buildDetailSection(String label, String value, IconData icon, {Color? color}) {
+  Widget _buildDetailSection(
+    String label,
+    String value,
+    IconData icon, {
+    Color? color,
+  }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -22,7 +28,10 @@ class DebtDetailSheet extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+              Text(
+                label,
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
+              ),
               const SizedBox(height: 2),
               Text(
                 value,
@@ -74,7 +83,9 @@ class DebtDetailSheet extends StatelessWidget {
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1,
-                      color: debt.isPaid ? const Color(0xFF166534) : const Color(0xFF991B1B),
+                      color: debt.isPaid
+                          ? const Color(0xFF166534)
+                          : const Color(0xFF991B1B),
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -91,12 +102,16 @@ class DebtDetailSheet extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: debt.isPaid ? const Color(0xFFDCFCE7) : const Color(0xFFFEE2E2),
+                  color: debt.isPaid
+                      ? const Color(0xFFDCFCE7)
+                      : const Color(0xFFFEE2E2),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   debt.isPaid ? Icons.check_circle : Icons.timer_outlined,
-                  color: debt.isPaid ? const Color(0xFF166534) : const Color(0xFF991B1B),
+                  color: debt.isPaid
+                      ? const Color(0xFF166534)
+                      : const Color(0xFF991B1B),
                   size: 32,
                 ),
               ),
@@ -105,15 +120,32 @@ class DebtDetailSheet extends StatelessWidget {
           const SizedBox(height: 32),
           _buildDetailSection("Hutang Kepada", debt.name, Icons.person_outline),
           const SizedBox(height: 16),
-          _buildDetailSection("Waktu Pinjam", DateFormat('dd MMMM yyyy HH:mm').format(debt.date), Icons.access_time),
+          _buildDetailSection(
+            "Waktu Pinjam",
+            DateFormat('dd MMMM yyyy HH:mm').format(debt.date),
+            Icons.access_time,
+          ),
           if (debt.isPaid && debt.paidDate != null) ...[
             const SizedBox(height: 16),
-            _buildDetailSection("Waktu Dibayar", DateFormat('dd MMMM yyyy HH:mm').format(debt.paidDate!), Icons.check_circle_outline, color: Colors.green),
+            _buildDetailSection(
+              "Waktu Dibayar",
+              DateFormat('dd MMMM yyyy HH:mm').format(debt.paidDate!),
+              Icons.check_circle,
+              color: Colors.green,
+            ),
           ],
           if (!debt.isPaid && debt.dueDate != null) ...[
             const SizedBox(height: 16),
-            _buildDetailSection("Jatuh Tempo", DateFormat('dd MMMM yyyy').format(debt.dueDate!), Icons.event, 
-                color: debt.isPaid ? null : (debt.dueDate!.difference(DateTime.now()).inDays < 3 ? Colors.red : null)),
+            _buildDetailSection(
+              "Jatuh Tempo",
+              DateFormat('dd MMMM yyyy').format(debt.dueDate!),
+              Icons.event,
+              color: debt.isPaid
+                  ? null
+                  : (debt.dueDate!.difference(DateTime.now()).inDays < 3
+                        ? Colors.red
+                        : null),
+            ),
           ],
           if (debt.note.isNotEmpty) ...[
             const SizedBox(height: 16),
@@ -122,7 +154,11 @@ class DebtDetailSheet extends StatelessWidget {
           const SizedBox(height: 32),
           const Text(
             "Riwayat Perubahan",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF1E293B)),
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF1E293B),
+            ),
           ),
           const SizedBox(height: 12),
           Flexible(
@@ -142,11 +178,20 @@ class DebtDetailSheet extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text("• ", style: TextStyle(color: Colors.indigo, fontWeight: FontWeight.bold)),
+                      const Text(
+                        "• ",
+                        style: TextStyle(
+                          color: Colors.indigo,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       Expanded(
                         child: Text(
                           debt.logs[debt.logs.length - 1 - i],
-                          style: const TextStyle(fontSize: 12, color: Color(0xFF475569)),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Color(0xFF475569),
+                          ),
                         ),
                       ),
                     ],

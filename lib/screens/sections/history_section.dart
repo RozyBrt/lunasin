@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../models/debt.dart';
 import '../../providers/debt_provider.dart';
 import '../../widgets/empty_state.dart';
@@ -27,7 +28,11 @@ class HistorySection extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(24, 32, 24, 8),
             child: Text(
               'Riwayat Hutang',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF1E293B)),
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1E293B),
+              ),
             ),
           ),
           const TabBar(

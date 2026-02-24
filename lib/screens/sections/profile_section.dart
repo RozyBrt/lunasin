@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../services/notification_service.dart';
 
 class ProfileSection extends StatelessWidget {
@@ -21,7 +22,7 @@ class ProfileSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 32),
-          
+
           // Notification Settings Section
           Container(
             padding: const EdgeInsets.all(20),
@@ -69,10 +70,7 @@ class ProfileSection extends StatelessWidget {
                           SizedBox(height: 4),
                           Text(
                             'Notifikasi akan muncul 3 hari, 1 hari, dan di hari jatuh tempo',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey,
-                            ),
+                            style: TextStyle(fontSize: 12, color: Colors.grey),
                           ),
                         ],
                       ),
@@ -98,7 +96,7 @@ class ProfileSection extends StatelessWidget {
                         );
                       }
                     },
-                    icon: const Icon(Icons.send_outlined, size: 18),
+                    icon: const Icon(Icons.send, size: 18),
                     label: const Text('Kirim Notifikasi Tes'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF6366F1),
@@ -114,9 +112,9 @@ class ProfileSection extends StatelessWidget {
               ],
             ),
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // App Info Section
           Container(
             padding: const EdgeInsets.all(20),
@@ -145,11 +143,23 @@ class ProfileSection extends StatelessWidget {
                 const SizedBox(height: 16),
                 _buildInfoRow(Icons.info_outline, 'Versi', '1.1.0'),
                 const SizedBox(height: 12),
-                _buildInfoRow(Icons.storage_outlined, 'Penyimpanan', 'Lokal (Hive)'),
+                _buildInfoRow(
+                  Icons.storage_outlined,
+                  'Penyimpanan',
+                  'Lokal (Hive)',
+                ),
                 const SizedBox(height: 12),
-                _buildInfoRow(Icons.security_outlined, 'Privasi', '100% Offline'),
+                _buildInfoRow(
+                  Icons.security_outlined,
+                  'Privasi',
+                  '100% Offline',
+                ),
                 const SizedBox(height: 12),
-                _buildInfoRow(Icons.bug_report_outlined, 'Status Notif', NotificationService.lastLog),
+                _buildInfoRow(
+                  Icons.bug_report_outlined,
+                  'Status Notif',
+                  NotificationService.lastLog,
+                ),
               ],
             ),
           ),
@@ -164,10 +174,7 @@ class ProfileSection extends StatelessWidget {
       children: [
         Icon(icon, size: 18, color: Colors.grey),
         const SizedBox(width: 12),
-        Text(
-          label,
-          style: const TextStyle(fontSize: 14, color: Colors.grey),
-        ),
+        Text(label, style: const TextStyle(fontSize: 14, color: Colors.grey)),
         const SizedBox(width: 8),
         Expanded(
           child: Text(

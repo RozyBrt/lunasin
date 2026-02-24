@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../models/debt.dart';
@@ -24,7 +25,9 @@ class _DebtDialogState extends State<DebtDialog> {
   void initState() {
     super.initState();
     nameController = TextEditingController(text: widget.debt?.name ?? '');
-    amountController = TextEditingController(text: widget.debt?.amount.toStringAsFixed(0) ?? '');
+    amountController = TextEditingController(
+      text: widget.debt?.amount.toStringAsFixed(0) ?? '',
+    );
     noteController = TextEditingController(text: widget.debt?.note ?? '');
     selectedDueDate = widget.debt?.dueDate;
   }
@@ -37,12 +40,17 @@ class _DebtDialogState extends State<DebtDialog> {
     super.dispose();
   }
 
-  Widget _buildTextField(TextEditingController controller, String label, IconData icon, 
-      {bool isNumber = false, bool isMultiline = false}) {
+  Widget _buildTextField(
+    TextEditingController controller,
+    String label,
+    IconData icon, {
+    bool isNumber = false,
+    bool isMultiline = false,
+  }) {
     return TextField(
       controller: controller,
-      keyboardType: isNumber 
-          ? TextInputType.number 
+      keyboardType: isNumber
+          ? TextInputType.number
           : (isMultiline ? TextInputType.multiline : TextInputType.text),
       maxLines: isMultiline ? null : 1,
       minLines: isMultiline ? 3 : 1,
@@ -52,7 +60,9 @@ class _DebtDialogState extends State<DebtDialog> {
         filled: true,
         fillColor: const Color(0xFFF8FAFC),
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide.none,
+        ),
       ),
     );
   }
@@ -86,13 +96,27 @@ class _DebtDialogState extends State<DebtDialog> {
               ),
             ),
             const SizedBox(height: 24),
-            _buildTextField(nameController, 'Hutang Kepada (Nama)', Icons.person_outline),
+            _buildTextField(
+              nameController,
+              'Hutang Kepada (Nama)',
+              Icons.person_outline,
+            ),
             const SizedBox(height: 16),
-            _buildTextField(amountController, 'Jumlah (Rp)', Icons.monetization_on_outlined, isNumber: true),
+            _buildTextField(
+              amountController,
+              'Jumlah (Rp)',
+              Icons.monetization_on_outlined,
+              isNumber: true,
+            ),
             const SizedBox(height: 16),
-            _buildTextField(noteController, 'Catatan / Alasan Pinjam', Icons.notes_outlined, isMultiline: true),
+            _buildTextField(
+              noteController,
+              'Catatan / Alasan Pinjam',
+              Icons.notes_outlined,
+              isMultiline: true,
+            ),
             const SizedBox(height: 16),
-            
+
             // Due Date Picker
             InkWell(
               onTap: () async {
@@ -114,15 +138,23 @@ class _DebtDialogState extends State<DebtDialog> {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.calendar_today_outlined, size: 20, color: Colors.indigo),
+                    const Icon(
+                      Icons.calendar_today_outlined,
+                      size: 20,
+                      color: Colors.indigo,
+                    ),
                     const SizedBox(width: 12),
                     Text(
-                      selectedDueDate == null 
-                        ? 'Set Tanggal Jatuh Tempo (Opsional)' 
-                        : 'Jatuh Tempo: ${DateFormat('dd MMM yyyy').format(selectedDueDate!)}',
+                      selectedDueDate == null
+                          ? 'Set Tanggal Jatuh Tempo (Opsional)'
+                          : 'Jatuh Tempo: ${DateFormat('dd MMM yyyy').format(selectedDueDate!)}',
                       style: TextStyle(
-                        color: selectedDueDate == null ? Colors.grey[600] : Colors.indigo,
-                        fontWeight: selectedDueDate == null ? FontWeight.normal : FontWeight.bold,
+                        color: selectedDueDate == null
+                            ? Colors.grey[600]
+                            : Colors.indigo,
+                        fontWeight: selectedDueDate == null
+                            ? FontWeight.normal
+                            : FontWeight.bold,
                       ),
                     ),
                     const Spacer(),
@@ -130,17 +162,20 @@ class _DebtDialogState extends State<DebtDialog> {
                       IconButton(
                         icon: const Icon(Icons.close, size: 18),
                         onPressed: () => setState(() => selectedDueDate = null),
-                      )
+                      ),
                   ],
                 ),
               ),
             ),
-            
+
             const SizedBox(height: 24),
             if (isEditing) ...[
               const Text(
                 'Riwayat Perubahan',
-                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey,
+                ),
               ),
               const SizedBox(height: 8),
               Container(
@@ -155,7 +190,10 @@ class _DebtDialogState extends State<DebtDialog> {
                   itemCount: widget.debt!.logs.length,
                   itemBuilder: (context, i) => Text(
                     "• ${widget.debt!.logs[widget.debt!.logs.length - 1 - i]}",
-                    style: const TextStyle(fontSize: 10, color: Colors.blueGrey),
+                    style: const TextStyle(
+                      fontSize: 10,
+                      color: Colors.blueGrey,
+                    ),
                   ),
                 ),
               ),
@@ -166,23 +204,35 @@ class _DebtDialogState extends State<DebtDialog> {
               height: 56,
               child: ElevatedButton(
                 onPressed: () {
-                  if (nameController.text.isNotEmpty && amountController.text.isNotEmpty) {
+                  if (nameController.text.isNotEmpty &&
+                      amountController.text.isNotEmpty) {
                     final amount = double.tryParse(amountController.text) ?? 0;
                     if (isEditing) {
                       final updatedDebt = widget.debt!;
-                      if (updatedDebt.amount != amount) updatedDebt.updateAmount(amount);
-                      if (updatedDebt.note != noteController.text) updatedDebt.updateNote(noteController.text);
-                      if (updatedDebt.dueDate != selectedDueDate) updatedDebt.updateDueDate(selectedDueDate);
+                      if (updatedDebt.amount != amount) {
+                        updatedDebt.updateAmount(amount);
+                      }
+                      if (updatedDebt.note != noteController.text) {
+                        updatedDebt.updateNote(noteController.text);
+                      }
+                      if (updatedDebt.dueDate != selectedDueDate) {
+                        updatedDebt.updateDueDate(selectedDueDate);
+                      }
                       updatedDebt.name = nameController.text;
-                      context.read<DebtProvider>().updateDebt(widget.index!, updatedDebt);
+                      context.read<DebtProvider>().updateDebt(
+                        widget.index!,
+                        updatedDebt,
+                      );
                     } else {
-                      context.read<DebtProvider>().addDebt(Debt(
-                            name: nameController.text,
-                            amount: amount,
-                            date: DateTime.now(),
-                            note: noteController.text,
-                            dueDate: selectedDueDate,
-                          ));
+                      context.read<DebtProvider>().addDebt(
+                        Debt(
+                          name: nameController.text,
+                          amount: amount,
+                          date: DateTime.now(),
+                          note: noteController.text,
+                          dueDate: selectedDueDate,
+                        ),
+                      );
                     }
                     Navigator.pop(context);
                   }
@@ -190,7 +240,9 @@ class _DebtDialogState extends State<DebtDialog> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF6366F1),
                   foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                   elevation: 0,
                 ),
                 child: Text(isEditing ? 'Perbarui Catatan' : 'Simpan Hutang'),
