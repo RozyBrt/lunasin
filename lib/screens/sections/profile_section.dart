@@ -141,7 +141,7 @@ class ProfileSection extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                _buildInfoRow(Icons.info_outline, 'Versi', '1.1.0'),
+                _buildInfoRow(Icons.info_outline, 'Versi', '1.2.0'),
                 const SizedBox(height: 12),
                 _buildInfoRow(
                   Icons.storage_outlined,

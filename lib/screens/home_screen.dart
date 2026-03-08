@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import '../models/debt.dart';
 import '../providers/debt_provider.dart';
+import '../services/notification_service.dart';
 import '../widgets/debt_dialog.dart';
 import '../widgets/debt_detail_sheet.dart';
 import 'sections/dashboard_section.dart';
@@ -18,11 +19,33 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   int _currentIndex = 0;
 
   // UBAH ANGKA INI: Berapa jam catatan muncul di beranda
   static const int _recentDurationHours = 6;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  /// Dipanggil otomatis oleh Flutter setiap kali app kembali ke foreground.
+  /// Ini memastikan timezone selalu sinkron dengan sistem, bahkan setelah
+  /// user mengubah timezone (misal via Fake GPS atau pindah timezone asli).
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      NotificationService().refreshTimezone();
+    }
+  }
 
   String _formatRupiah(double amount) {
     return NumberFormat.currency(
