@@ -7,20 +7,23 @@ Aplikasi pencatat hutang pribadi yang modern, aman, dan pintar. Dibuat dengan Fl
 - **Pencatatan Hutang Digital**: Simpan nama, jumlah, catatan, dan tanggal jatuh tempo dengan mudah.
 - **Log Perubahan (History Log)**: Setiap perubahan (update jumlah, catatan, atau tanggal) terekam secara otomatis untuk transparansi.
 - **Sistem Pengingat Pintar (Smart Notifications)**:
-  - Notifikasi otomatis pada **H-3, H-1, dan Hari Jatuh Tempo** (Pukul 09:00 WIB).
-  - **Logika Rescue (Second Chance)**: Jika Anda mencatat hutang di sore hari untuk besok, sistem otomatis menjadwalkan pengingat jam 19:00 malam ini agar Anda tidak lupa.
+  - Notifikasi otomatis pada **H-3, H-1, dan Hari Jatuh Tempo** (Pukul 09:00 waktu lokal perangkat).
+  - **Logika Rescue (Second Chance)**: Jika jadwal notifikasi jam 09:00 sudah terlewat di hari yang sama, sistem otomatis rescheduling ke jam 19:00 malam itu, agar pengingat tetap tersampaikan.
+  - Timezone otomatis mengikuti sistem perangkat (WIB, WITA, WIT, dll.) dan di-refresh setiap kali app dibuka kembali.
 - **Manajemen Riwayat**: Pisahkan catatan antara hutang yang masih aktif dan yang sudah lunas.
-- **Jadwal Bayar**: Halaman khusus untuk memantau urutan hutang berdasarkan tanggal jatuh tempo terdekat.
-- **Privasi 100%**: Semua data disimpan secara lokal di perangkat Anda menggunakan Hive (Offline). Tidak ada data yang dikirim ke server.
+- **Jadwal Bayar**: Halaman khusus untuk memantau urutan hutang berdasarkan tanggal jatuh tempo terdekat. Hutang yang < 3 hari dari jatuh tempo ditandai merah.
+- **Privasi 100%**: Semua data disimpan secara lokal di perangkat menggunakan Hive (Offline). Tidak ada data yang dikirim ke server.
 
 ## 🚀 Teknologi yang Digunakan
 
-- **Framework**: Flutter
-- **Database Lokal**: Hive (NoSQL yang sangat cepat)
-- **State Management**: Provider
-- **Local Notifications**: `flutter_local_notifications`
-- **Timezone Support**: `timezone` & `flutter_timezone` (Konfigurasi manual fallback untuk stabilitas build)
-- **UI Design**: Vanilla CSS-like styling dengan kustomisasi Glassmorphism dan Vibrant Colors.
+| Teknologi | Keterangan |
+|---|---|
+| **Flutter** | Framework utama (Dart SDK ^3.9.0) |
+| **Hive** | Database lokal NoSQL berbasis key-value, cepat dan ringan |
+| **Provider** | State management — sumber kebenaran tunggal data hutang |
+| **flutter_local_notifications** | Sistem notifikasi lokal terjadwal |
+| **timezone & flutter_timezone** | Deteksi dan sinkronisasi timezone lokal dari OS secara dinamis |
+| **intl** | Format mata uang Rupiah dan tanggal |
 
 ## 🛠️ Cara Menjalankan Project
 

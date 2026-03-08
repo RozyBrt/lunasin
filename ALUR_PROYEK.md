@@ -9,8 +9,9 @@ Aplikasi Flutter untuk **mencatat hutang** secara lokal. Semua data disimpan di 
 ```
 main.dart
   ├── Inisialisasi Hive (database lokal)
-  ├── Inisialisasi NotificationService
-  ├── Buat DebtProvider (state management)
+  ├── Jalankan secara PARALEL (Future.wait):
+  │   ├── NotificationService().initialize()
+  │   └── DebtProvider().init()
   └── Jalankan MyApp → HomeScreen
 ```
 
@@ -98,11 +99,11 @@ Setiap operasi selalu diakhiri `notifyListeners()` → semua widget yang "dengar
 `HomeScreen` adalah layar satu-satunya. Navigasi pakai **Bottom Navigation Bar** dengan 4 tab:
 
 ```
-BottomNavigationBar
-  ├── [0] 🏠 Beranda    → DashboardSection
-  ├── [1] 💼 Riwayat   → HistorySection
-  ├──     [+]            → FAB (Floating Action Button) — Tambah hutang baru
-  ├── [2] 📅 Jadwal    → ScheduleSection
+BottomAppBar (CircularNotchedRectangle)
+  ├── [0] 🏠 Beranda     → DashboardSection
+  ├── [1] 💼 Riwayat    → HistorySection
+  ├──      [+]             → FAB (Floating Action Button) — Tambah hutang baru
+  ├── [2] 📅 Jadwal     → ScheduleSection
   └── [3] ⚙️ Pengaturan → ProfileSection
 ```
 
@@ -195,7 +196,7 @@ Pengguna tap kartu hutang, ATAU tekan ikon ℹ️
 - Judul besar "CATATAN HUTANG SAYA"
 - Total yang harus dibayar
 - Dua summary card: **Belum Dibayar** (merah) dan **Sudah Dibayar** (hijau)
-- List hutang **terbaru** — hanya yang dibuat dalam **6 jam terakhir** (bisa diubah via `_recentDurationHours`)
+- List hutang **terbaru** — hanya yang dibuat dalam **6 jam terakhir** (bisa diubah via konstanta `_recentDurationHours` di `home_screen.dart`), maksimal **5 item** ditampilkan
 - Tombol "Lihat Semua" → pindah ke tab Riwayat
 
 ### 💼 Riwayat (`HistorySection`)
@@ -212,8 +213,8 @@ Pengguna tap kartu hutang, ATAU tekan ikon ℹ️
 
 ### ⚙️ Pengaturan (`ProfileSection`)
 - Tombol **"Kirim Notifikasi Tes"** untuk cek apakah notifikasi berfungsi
-- Info aplikasi: versi, penyimpanan (Hive/Lokal), privasi (100% Offline)
-- Status terakhir NotificationService (untuk debugging)
+- Info aplikasi: versi `1.2.0`, penyimpanan (Lokal/Hive), privasi (100% Offline)
+- Status terakhir `NotificationService.lastLog` (untuk debugging)
 
 ### 📝 Form & Detail
 <img src="assets/screenshots/05_form_tambah.jpeg" width="200"> <img src="assets/screenshots/06_detail_hutang.jpeg" width="200">
@@ -236,14 +237,22 @@ Saat app pertama kali dibuka:
 
 ```
 Saat hutang punya dueDate dan belum lunas:
-  → Notifikasi dijadwalkan 3x:
+  → Notifikasi dijadwalkan hingga 3x:
     ├── H-3 (3 hari sebelum jatuh tempo) jam 09:00 → "3 Hari Lagi!"
     ├── H-1 (1 hari sebelum)             jam 09:00 → "Besok Jatuh Tempo!"
     └── H-0 (hari H jatuh tempo)         jam 09:00 → "Hari Ini Jatuh Tempo!"
-         (kalau jam 09:00 sudah lewat hari itu, rescheduled ke jam 19:00)
+
+  Logika Rescue (Second Chance):
+    → Jika jadwal jam 09:00 sudah terlewat:
+        ├── Kalau masih hari yang sama → rescheduled ke jam 19:00 hari itu
+        └── Kalau sudah lewat hari-nya → notifikasi dilewati (tidak dijadwalkan)
 
 Saat hutang ditandai lunas / jatuh tempo dihapus:
   → Semua notifikasi hutang tersebut dibatalkan
+
+Timezone:
+  → Selalu menggunakan timezone lokal dari OS (via flutter_timezone)
+  → Di-refresh otomatis setiap kali app kembali ke foreground (didChangeAppLifecycleState)
 ```
 
 ID notifikasi digenerate dari Hive key hutang supaya tidak tabrakan antar hutang.
