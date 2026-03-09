@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../models/debt.dart';
+import '../../../data/models/debt.dart';
 import '../../providers/debt_provider.dart';
 import '../../widgets/summary_card.dart';
 import '../../widgets/transaction_item.dart';
@@ -44,16 +44,18 @@ class DashboardSection extends StatelessWidget {
               color: Color(0xFF1E293B),
             ),
           ),
-          const SizedBox(height: 4),
-          const Text(
-            'Kumpulan dosa kalo ga dibayar 😈',
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
-              color: Color(0xFF94A3B8),
-              fontStyle: FontStyle.italic,
+          if (provider.debts.isNotEmpty) ...[
+            const SizedBox(height: 4),
+            const Text(
+              'Kumpulan dosa kalo ga dibayar 😈',
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF94A3B8),
+                fontStyle: FontStyle.italic,
+              ),
             ),
-          ),
+          ],
           const SizedBox(height: 16),
           Text(
             "Total Yang Harus Dibayar: ${formatRupiah(totalAktif)}",

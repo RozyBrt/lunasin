@@ -1,31 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
-import 'models/debt.dart';
-import 'providers/debt_provider.dart';
-import 'screens/home_screen.dart';
-import 'services/notification_service.dart';
+import 'data/models/debt.dart';
+import 'presentation/providers/debt_provider.dart';
+import 'presentation/pages/home_screen.dart';
+import 'core/services/notification_service.dart';
+import 'data/repositories/hive_debt_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   await Hive.initFlutter();
   Hive.registerAdapter(DebtAdapter());
-  
+
+  final notificationService = NotificationService();
+  final debtRepository = HiveDebtRepository();
+
   // Create provider instance but don't block everything with its init
-  final debtProvider = DebtProvider();
-  
+  final debtProvider = DebtProvider(
+    repository: debtRepository,
+    notificationService: notificationService,
+  );
+
   // Run notification and provider initialization in parallel
-  await Future.wait([
-    NotificationService().initialize(),
-    debtProvider.init(),
-  ]);
+  await Future.wait([notificationService.initialize(), debtProvider.init()]);
 
   runApp(
     MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(value: debtProvider),
-      ],
+      providers: [ChangeNotifierProvider.value(value: debtProvider)],
       child: const MyApp(),
     ),
   );

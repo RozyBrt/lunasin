@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lunasin/models/debt.dart';
+import 'package:lunasin/data/models/debt.dart';
 
 void main() {
   group('Debt Provider Integration Tests', () {

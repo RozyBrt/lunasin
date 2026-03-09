@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import '../models/debt.dart';
+import '../../core/services/notification_service.dart';
+import '../../data/models/debt.dart';
 import '../providers/debt_provider.dart';
-import '../services/notification_service.dart';
 import '../widgets/debt_dialog.dart';
 import '../widgets/debt_detail_sheet.dart';
 import 'sections/dashboard_section.dart';

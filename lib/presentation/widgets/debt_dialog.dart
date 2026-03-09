@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import '../models/debt.dart';
+import '../../data/models/debt.dart';
 import '../providers/debt_provider.dart';
 
 class DebtDialog extends StatefulWidget {
@@ -179,7 +178,8 @@ class _DebtDialogState extends State<DebtDialog> {
               ),
               const SizedBox(height: 8),
               Container(
-                height: 100,
+                height:
+                    140, // ditambahkan sedikit untuk mengakomodasi teks yang lebih besar
                 width: double.infinity,
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
@@ -188,13 +188,73 @@ class _DebtDialogState extends State<DebtDialog> {
                 ),
                 child: ListView.builder(
                   itemCount: widget.debt!.logs.length,
-                  itemBuilder: (context, i) => Text(
-                    "• ${widget.debt!.logs[widget.debt!.logs.length - 1 - i]}",
-                    style: const TextStyle(
-                      fontSize: 10,
-                      color: Colors.blueGrey,
-                    ),
-                  ),
+                  itemBuilder: (context, i) {
+                    final logStr =
+                        widget.debt!.logs[widget.debt!.logs.length - 1 - i];
+                    final parts = logStr.split(' pada ');
+                    String actionText = logStr;
+                    String dateText = '';
+                    if (parts.length > 1) {
+                      dateText = parts.last;
+                      actionText = parts
+                          .sublist(0, parts.length - 1)
+                          .join(' pada ');
+                      try {
+                        final parsedDate = DateTime.parse(dateText);
+                        dateText = DateFormat(
+                          'dd MMM yyyy HH:mm',
+                        ).format(parsedDate);
+                      } catch (_) {}
+                    }
+
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(top: 2, right: 8),
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: Colors.indigo.withOpacity(0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.history,
+                              size: 10,
+                              color: Colors.indigo,
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  actionText,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Color(0xFF334155),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                if (dateText.isNotEmpty)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 2.0),
+                                    child: Text(
+                                      dateText,
+                                      style: const TextStyle(
+                                        fontSize: 10,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
               const SizedBox(height: 24),

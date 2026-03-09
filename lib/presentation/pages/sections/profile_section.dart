@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../services/notification_service.dart';
+import '../../../core/services/notification_service.dart';
 
 class ProfileSection extends StatelessWidget {
   const ProfileSection({super.key});

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:intl/intl.dart';
-import '../models/debt.dart';
+import '../../data/models/debt.dart';
 import '../providers/debt_provider.dart';
 
 class TransactionItem extends StatelessWidget {
@@ -54,7 +53,34 @@ class TransactionItem extends StatelessWidget {
         child: Row(
           children: [
             InkWell(
-              onTap: () => provider.togglePaid(index),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text(
+                      debt.isPaid ? "Batalkan Lunas?" : "Tandai Lunas?",
+                    ),
+                    content: Text(
+                      debt.isPaid
+                          ? "Apakah Anda yakin ingin membatalkan status lunas?"
+                          : "Apakah Anda yakin ingin menandai catatan ini sebagai lunas?",
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text("Tidak"),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          provider.togglePaid(index);
+                          Navigator.pop(context);
+                        },
+                        child: const Text("Ya"),
+                      ),
+                    ],
+                  ),
+                );
+              },
               borderRadius: BorderRadius.circular(100),
               child: Container(
                 padding: const EdgeInsets.all(10),

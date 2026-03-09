@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../models/debt.dart';
+import '../../../data/models/debt.dart';
 import '../../providers/debt_provider.dart';
 import '../../widgets/transaction_item.dart';
 
