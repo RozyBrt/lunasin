@@ -35,13 +35,23 @@ class DashboardSection extends StatelessWidget {
         children: [
           const SizedBox(height: 32),
           const Text(
-            'CATATAN\nHUTANG SAYA',
+            'LUNASIN',
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.w900,
               height: 1.1,
               letterSpacing: -0.5,
               color: Color(0xFF1E293B),
+            ),
+          ),
+          const SizedBox(height: 4),
+          const Text(
+            'Kumpulan dosa kalo ga dibayar 😈',
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF94A3B8),
+              fontStyle: FontStyle.italic,
             ),
           ),
           const SizedBox(height: 16),
@@ -81,11 +91,18 @@ class DashboardSection extends StatelessWidget {
             children: [
               const Text(
                 'Catatan Pinjaman Terbaru',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF1E293B)),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF1E293B),
+                ),
               ),
               TextButton(
                 onPressed: onViewAll,
-                child: const Text('Lihat Semua', style: TextStyle(color: Color(0xFF6366F1))),
+                child: const Text(
+                  'Lihat Semua',
+                  style: TextStyle(color: Color(0xFF6366F1)),
+                ),
               ),
             ],
           ),
@@ -93,17 +110,23 @@ class DashboardSection extends StatelessWidget {
           Builder(
             builder: (context) {
               final now = DateTime.now();
-              final recentItems = provider.debts.asMap().entries
-                  .where((e) => now.difference(e.value.date).inHours < recentDurationHours)
+              final recentItems = provider.debts
+                  .asMap()
+                  .entries
+                  .where(
+                    (e) =>
+                        now.difference(e.value.date).inHours <
+                        recentDurationHours,
+                  )
                   .toList()
                   .reversed
                   .toList();
-              
+
               if (recentItems.isEmpty) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: Text(
-                    "Tidak ada catatan dalam $recentDurationHours jam terakhir", 
+                    "Tidak ada catatan dalam $recentDurationHours jam terakhir",
                     style: const TextStyle(color: Colors.grey, fontSize: 13),
                   ),
                 );

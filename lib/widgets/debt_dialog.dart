@@ -88,7 +88,7 @@ class _DebtDialogState extends State<DebtDialog> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              isEditing ? 'Edit Catatan Hutang' : 'Tambah Catatan Hutang',
+              isEditing ? 'Edit Catatan' : 'Tambah Catatan Baru',
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -245,7 +245,7 @@ class _DebtDialogState extends State<DebtDialog> {
                   ),
                   elevation: 0,
                 ),
-                child: Text(isEditing ? 'Perbarui Catatan' : 'Simpan Hutang'),
+                child: Text(isEditing ? 'Perbarui Catatan' : 'Simpan Catatan'),
               ),
             ),
             const SizedBox(height: 32),
