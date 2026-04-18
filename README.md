@@ -11,6 +11,8 @@ Aplikasi pencatat hutang pribadi yang modern, aman, dan pintar. Dibuat dengan Fl
   - **Logika Rescue (Second Chance)**: Jika jadwal notifikasi jam 09:00 sudah terlewat di hari yang sama, sistem otomatis rescheduling ke jam 19:00 malam itu, agar pengingat tetap tersampaikan.
   - Timezone otomatis mengikuti sistem perangkat (WIB, WITA, WIT, dll.) dan di-refresh setiap kali app dibuka kembali.
 - **Manajemen Riwayat**: Pisahkan catatan antara hutang yang masih aktif dan yang sudah lunas.
+- **Laporan & Statistik (NEW)**: Dashboard visual dengan Pie Chart untuk memantau rasio pelunasan dan daftar orang dengan hutang terbesar.
+- **Ekspor Dokumen (NEW)**: Generate laporan PDF resmi secara otomatis yang bisa langsung dibagikan via WhatsApp sebagai pengingat formal.
 - **Jadwal Bayar**: Halaman khusus untuk memantau urutan hutang berdasarkan tanggal jatuh tempo terdekat. Hutang yang < 3 hari dari jatuh tempo ditandai merah.
 - **Privasi 100%**: Semua data disimpan secara lokal di perangkat menggunakan Hive (Offline). Tidak ada data yang dikirim ke server.
 
@@ -21,9 +23,12 @@ Aplikasi pencatat hutang pribadi yang modern, aman, dan pintar. Dibuat dengan Fl
 | **Flutter** | Framework utama (Dart SDK ^3.9.0) |
 | **Hive** | Database lokal NoSQL berbasis key-value, cepat dan ringan |
 | **Provider** | State management — sumber kebenaran tunggal data hutang |
+| **fl_chart** | Visualisasi data dan grafik statistik yang interaktif |
+| **pdf & printing** | Mesin pembuat dokumen PDF untuk laporan formal |
+| **share_plus** | Fitur berbagi file antar aplikasi (WhatsApp/Email) |
 | **flutter_local_notifications** | Sistem notifikasi lokal terjadwal |
 | **timezone & flutter_timezone** | Deteksi dan sinkronisasi timezone lokal dari OS secara dinamis |
-| **intl** | Format mata uang Rupiah dan tanggal |
+| **intl** | Format mata uang Rupiah dan tanggal multibahasa |
 
 ## 🛠️ Cara Menjalankan Project
 
