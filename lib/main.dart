@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'data/models/debt.dart';
 import 'presentation/providers/debt_provider.dart';
 import 'presentation/pages/home_screen.dart';
@@ -11,6 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Hive.initFlutter();
+  await initializeDateFormatting('id_ID', null);
   Hive.registerAdapter(DebtAdapter());
 
   final notificationService = NotificationService();

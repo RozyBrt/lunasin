@@ -212,7 +212,7 @@ class DebtDetailSheet extends StatelessWidget {
                           margin: const EdgeInsets.only(top: 2, right: 12),
                           padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
-                            color: Colors.indigo.withOpacity(0.1),
+                            color: Colors.indigo.withValues(alpha: 0.1),
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
